@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/jacob-hegna/basicpp.svg?branch=master)](https://travis-ci.org/jacob-hegna/basicpp)
 # basic++
-basic++ is an open source, BASIC compiler.  Currently it does not follow any specific dialect (not enough commands are supported), but the GRAMMAR.md file will define all the possible commands.
+basic++ is an open source, BASIC interpreter.  Currently it does not follow any specific dialect (not enough commands are supported), but the GRAMMAR.md file will define all the possible commands.
 
 ## Copyright and License
 basic++ is Copyright 2013 Jacob Hegna.
@@ -17,12 +17,12 @@ You should have received a copy of the GNU General Public License along with thi
 Clone the repo:
 
 ```
-git clone https://github.com/jacob-hegna/basic++
+git clone https://github.com/jacob-hegna/basicpp
 ```
 
 Move to the folder and build
 
 ```
-cd basic++
+cd basicpp
 make
 ```
