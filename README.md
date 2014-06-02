@@ -2,7 +2,7 @@
 basic++ is an open source, BASIC compiler.  Currently it does not follow any specific dialect (not enough commands are supported), but the GRAMMAR.md file will define all the possible commands.
 
 ## Copyright and License
-Divide and Conquer is Copyright 2013 Jacob Hegna.
+basic++ is Copyright 2013 Jacob Hegna.
 
 This file is a part of basic++.
 
