@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/jacob-hegna/basicpp.svg?branch=master)](https://travis-ci.org/jacob-hegna/basicpp)
 # basic++
 basic++ is an open source, BASIC compiler.  Currently it does not follow any specific dialect (not enough commands are supported), but the GRAMMAR.md file will define all the possible commands.
 
