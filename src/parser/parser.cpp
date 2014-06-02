@@ -39,6 +39,8 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             return new Mult(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
         } else if(expr.at(i) == "/") {
             return new Div(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
+        } else if(expr.at(i) == "%") {
+            return new Mod(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
         } else if(expr.at(i) == "print") {
             Print p(this->parse(expr, i+1));
             p.evaluate();

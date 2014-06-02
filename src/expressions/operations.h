@@ -39,4 +39,10 @@ public:
     int evaluate() {return LOperand->evaluate() * ROperand->evaluate();}
 };
 
+class Mod : public Operation {
+public:
+    Mod(Expression *a, Expression *b) : Operation(a, b) {}
+    int evaluate() {return LOperand->evaluate() % ROperand->evaluate();}
+};
+
 #endif
