@@ -12,6 +12,7 @@
 #include "../expressions/expressions.h"
 #include "../expressions/operations.h"
 #include "../expressions/variables.h"
+#include "../expressions/stdfunctions.h"
 
 class Parser {
 public:

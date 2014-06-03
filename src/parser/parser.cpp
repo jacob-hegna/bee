@@ -45,15 +45,27 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             Print p(this->parse(expr, i+1));
             p.evaluate();
             return nullptr;
+        } else if(expr.at(i) == "let") {
+            if(expr.at(i+2) == "=") {
+                Let l(expr.at(i+1), this->parse(expr, i+3));
+                l.evaluate();
+            }
+            return nullptr;
+        } else if(variables.find(expr.at(i)) != variables.end()) {
+            Get *g = new Get(expr.at(i));
+            return g;
+        } else if(Int::is_int(expr.at(i))) {
+            // return new Int(expr.at(i));
         }
         return this->parse(expr, i+1);
     }
 }
 
 void Parser::start() {
+    std::vector<std::string> expr;
     for(std::string &line : file) {
         std::transform(line.begin(), line.end(), line.begin(), tolower);
-        std::vector<std::string> expr = strtok_v(line, " ");
+        expr = strtok_v(line, " ");
         this->parse(expr, 0);
         expr.clear();
     }

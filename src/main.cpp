@@ -5,6 +5,7 @@
 
 #include "shell/shell.h"
 #include "parser/parser.h"
+#include "globals.h"
 
 int main(int argc, char *argv[]) {
     std::string usage = "Usage: basic++ [-h | --help] [filename]";
@@ -20,3 +21,6 @@ int main(int argc, char *argv[]) {
         }
     }
 }
+
+// globals.h definitions
+std::map<std::string, int> variables;

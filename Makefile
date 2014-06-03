@@ -1,5 +1,5 @@
-BUILDDIR    = bin/
-SOURCEDIR   = src/
+BUILDDIR    = ./bin/
+SOURCEDIR   = ./src/
 
 DIRS        = $(wildcard $(SOURCEDIR)*/)
 VPATH       = $(SOURCEDIR):$(DIRS):$(foreach dir, $(DIRS), $(wildcard $(dir)*/))
