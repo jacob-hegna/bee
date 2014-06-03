@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+#include "../parser/parser.h"
+
 class Shell {
 public:
     Shell();

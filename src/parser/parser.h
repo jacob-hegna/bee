@@ -14,12 +14,14 @@
 #include "../expressions/variables.h"
 #include "../expressions/stdfunctions.h"
 
+std::vector<std::string> strtok_v(std::string o_param, std::string tok);
+
 class Parser {
 public:
     Parser(std::string);
     ~Parser();
 
-    Expression* parse(std::vector<std::string>, int);
+    static Expression* parse(std::vector<std::string>, int);
     void start();
 
 private:

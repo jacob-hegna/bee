@@ -19,6 +19,11 @@ void Shell::start() {
         getline(std::cin, input);
         if(input == ":quit" || input == ":q") {
             break;
+        } else {
+            std::transform(input.begin(), input.end(), input.begin(), tolower);
+            std::vector<std::string> expr = strtok_v(input, " ");
+            Parser::parse(expr, 0);
+            expr.clear();
         }
     }
     std::cout << "BASIC++ shell successfully terminated." << std::endl;

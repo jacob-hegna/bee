@@ -42,12 +42,12 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
         } else if(expr.at(i) == "%") {
             return new Mod(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
         } else if(expr.at(i) == "print") {
-            Print p(this->parse(expr, i+1));
+            Print p(parse(expr, i+1));
             p.evaluate();
             return nullptr;
         } else if(expr.at(i) == "let") {
             if(expr.at(i+2) == "=") {
-                Let l(expr.at(i+1), this->parse(expr, i+3));
+                Let l(expr.at(i+1), parse(expr, i+3));
                 l.evaluate();
             }
             return nullptr;
@@ -57,7 +57,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
         } else if(Int::is_int(expr.at(i))) {
             // return new Int(expr.at(i));
         }
-        return this->parse(expr, i+1);
+        return parse(expr, i+1);
     }
 }
 
