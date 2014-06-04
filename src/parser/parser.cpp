@@ -59,6 +59,11 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             else if(expr.at(i) == "*") { return new Mult(a, b); }
             else if(expr.at(i) == "/") { return new Div(a, b); }
             else if(expr.at(i) == "%") { return new Mod(a, b); }
+            else if(expr.at(i) == "&") { return new Bit_AND(a, b); }
+            else if(expr.at(i) == "|") { return new Bit_OR(a, b); }
+            else if(expr.at(i) == "^") { return new Bit_XOR(a, b); }
+            else if(expr.at(i) == "<<") { return new Bit_SHL(a, b); }
+            else if(expr.at(i) == ">>") { return new Bit_SHR(a, b); }
         } else if(expr.at(i) == "print") {
             if(expr.size() == 2) {
                 in_exp = true;
