@@ -3,15 +3,6 @@
 
 #include "expressions.h"
 
-// This saves so much code
-// I'm so sorry
-#define OPERATION(name, op) \
-                        class name : public Operation { \
-                        public: \
-                            name (Expression *a, Expression *b) : Operation(a, b) {} \
-                            int evaluate() {return LOperand->evaluate() op ROperand->evaluate();} \
-                        };
-
 // Used to check what the expression is the the parser
 const std::string operations[] = {
     "+",
@@ -37,6 +28,15 @@ protected:
     Expression *LOperand, 
                *ROperand;
 };
+
+// This saves so much code (~50% of the LOC of the file)
+// I'm so sorry
+#define OPERATION(name, op)                                                   \
+    class name : public Operation {                                           \
+    public:                                                                   \
+        name (Expression *a, Expression *b) : Operation(a, b) {}              \
+        int evaluate() {return LOperand->evaluate() op ROperand->evaluate();} \
+    };
 
 /* I'm not sure how I thought this was a good idea
  * Email me at jacobhegna@gmail.com when this is on
