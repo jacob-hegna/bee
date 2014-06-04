@@ -1,5 +1,6 @@
 #include "parser.h"
 
+// c++11 strtok returns a vector
 std::vector<std::string> strtok_v(std::string o_param, std::string tok) {
     std::vector<std::string> vtok;
     char *duptok = strdup(tok.c_str());
@@ -8,6 +9,21 @@ std::vector<std::string> strtok_v(std::string o_param, std::string tok) {
         vtok.push_back(ctok);
         ctok = strtok(nullptr, duptok);
     }
+    free(duptok);
+    return vtok;
+}
+
+// strtok_v but keeps the token
+std::vector<std::string> strtok_v_k(std::string o_param, std::string tok) {
+    std::vector<std::string> vtok;
+    char *duptok = strdup(tok.c_str());
+    char *ctok = strtok(strdup(o_param.c_str()), duptok);
+    while(ctok != nullptr) {
+        vtok.push_back(ctok);
+        vtok.push_back(tok);
+        ctok = strtok(nullptr, duptok);
+    }
+    vtok.pop_back();
     free(duptok);
     return vtok;
 }
@@ -56,6 +72,14 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             return g;
         } else if(Int::is_int(expr.at(i))) {
             // return new Int(expr.at(i));
+        } else {
+            for(std::string op : operations) {
+                int loc = 0;
+                if((loc = expr.at(i).find(op)) != std::string::npos) {
+                    std::vector<std::string> split = strtok_v_k(expr.at(i), op);
+                    return parse(split, 0);
+                }
+            }
         }
         return parse(expr, i+1);
     }

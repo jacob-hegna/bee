@@ -9,9 +9,9 @@ Shell::~Shell() {
 }
 
 void Shell::start() {
-    std::cout << "Welcome to the BASIC++ shell!"                                  << std::endl
+    std::cout << "Welcome to the basic++ shell!"                                  << std::endl
               << "The shell will evaluate expressions, however will not simulate" << std::endl
-              << "a full BASIC++ environment."                                    << std::endl
+              << "a full basic++ environment."                                    << std::endl
               << "Input ':quit' or ':q' to quit."                          << std::endl;
     std::string input;
     while(true) {
@@ -26,5 +26,5 @@ void Shell::start() {
             expr.clear();
         }
     }
-    std::cout << "BASIC++ shell successfully terminated." << std::endl;
+    std::cout << "basic++ shell successfully terminated." << std::endl;
 }

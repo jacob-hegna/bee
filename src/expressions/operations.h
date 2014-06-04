@@ -3,6 +3,14 @@
 
 #include "expressions.h"
 
+const std::string operations[] = {
+    "+",
+    "-",
+    "/",
+    "*",
+    "%"
+};
+
 class Operation : public Expression {
 public:
     Operation() {}
