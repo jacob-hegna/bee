@@ -58,6 +58,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             else if(expr.at(i) == "-") { return new Sub(a, b); }
             else if(expr.at(i) == "*") { return new Mult(a, b); }
             else if(expr.at(i) == "/") { return new Div(a, b); }
+            else if(expr.at(i) == "%") { return new Mod(a, b); }
         } else if(expr.at(i) == "print") {
             if(expr.size() == 2) {
                 in_exp = true;
