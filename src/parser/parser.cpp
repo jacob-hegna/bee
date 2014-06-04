@@ -49,7 +49,7 @@ Parser::~Parser() {
 
 Expression* Parser::parse(std::vector<std::string> expr, int i) {
     if(i <= expr.size()) {
-        if(std::find(operations, operations + 5, expr.at(i)) != operations + 5) {
+        if(std::find(operations.begin(), operations.end(), expr.at(i)) != operations.end()) {
             in_exp = true;
             Expression *a = new Int(parse(expr, i-1)->evaluate());
             in_exp = true;

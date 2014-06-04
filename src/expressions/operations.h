@@ -1,10 +1,12 @@
 #ifndef OPERATIONS_H_
 #define OPERATIONS_H_
 
+#include <array>
+
 #include "expressions.h"
 
 // Used to check what the expression is the the parser
-const std::string operations[] = {
+const std::array<std::string, 10> operations = {
     "+",
     "-",
     "/",
