@@ -1,5 +1,7 @@
 #include "parser.h"
 
+bool in_exp = false;
+
 // c++11 strtok returns a vector
 std::vector<std::string> strtok_v(std::string o_param, std::string tok) {
     std::vector<std::string> vtok;
@@ -47,31 +49,42 @@ Parser::~Parser() {
 
 Expression* Parser::parse(std::vector<std::string> expr, int i) {
     if(i <= expr.size()) {
-        if(expr.at(i) == "+") {
-            return new Add(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
-        } else if(expr.at(i) == "-") {
-            return new Sub(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
-        } else if(expr.at(i) == "*") {
-            return new Mult(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
-        } else if(expr.at(i) == "/") {
-            return new Div(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
-        } else if(expr.at(i) == "%") {
-            return new Mod(new Int(expr.at(i-1)), new Int(expr.at(i+1)));
+        if(std::find(operations, operations + 5, expr.at(i)) != operations + 5) {
+            in_exp = true;
+            Expression *a = new Int(parse(expr, i-1)->evaluate());
+            in_exp = true;
+            Expression *b = new Int(parse(expr, i+1)->evaluate());
+            if(expr.at(i) == "+")      { return new Add(a, b); }
+            else if(expr.at(i) == "-") { return new Sub(a, b); }
+            else if(expr.at(i) == "*") { return new Mult(a, b); }
+            else if(expr.at(i) == "/") { return new Div(a, b); }
         } else if(expr.at(i) == "print") {
+            if(expr.size() == 2) {
+                in_exp = true;
+            } else {
+                in_exp = false;
+            }
             Print p(parse(expr, i+1));
             p.evaluate();
             return nullptr;
         } else if(expr.at(i) == "let") {
+            if(expr.size() == 4) {
+                in_exp = true;
+            } else {
+                in_exp = false;
+            }
             if(expr.at(i+2) == "=") {
                 Let l(expr.at(i+1), parse(expr, i+3));
                 l.evaluate();
             }
             return nullptr;
-        } else if(variables.find(expr.at(i)) != variables.end()) {
-            Get *g = new Get(expr.at(i));
-            return g;
-        } else if(Int::is_int(expr.at(i))) {
-            // return new Int(expr.at(i));
+        } else if(in_exp) {
+            in_exp = false;
+            if(variables.find(expr.at(i)) != variables.end()) {
+                return new Get(expr.at(i));
+            } else if(Int::is_int(expr.at(i))) {
+                return new Int(expr.at(i));
+            }
         } else {
             for(std::string op : operations) {
                 int loc = 0;
@@ -83,6 +96,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
         }
         return parse(expr, i+1);
     }
+    return nullptr;
 }
 
 void Parser::start() {
@@ -90,7 +104,8 @@ void Parser::start() {
     for(std::string &line : file) {
         std::transform(line.begin(), line.end(), line.begin(), tolower);
         expr = strtok_v(line, " ");
-        this->parse(expr, 0);
+        in_exp = false; // reset every line
+        this->parse(expr);
         expr.clear();
     }
 }

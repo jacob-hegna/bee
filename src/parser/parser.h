@@ -21,7 +21,7 @@ public:
     Parser(std::string);
     ~Parser();
 
-    static Expression* parse(std::vector<std::string>, int);
+    static Expression* parse(std::vector<std::string> expr, int i = 0);
     void start();
 
 private:

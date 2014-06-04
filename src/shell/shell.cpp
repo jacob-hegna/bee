@@ -22,7 +22,7 @@ void Shell::start() {
         } else {
             std::transform(input.begin(), input.end(), input.begin(), tolower);
             std::vector<std::string> expr = strtok_v(input, " ");
-            Parser::parse(expr, 0);
+            Parser::parse(expr);
             expr.clear();
         }
     }
