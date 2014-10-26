@@ -62,6 +62,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
                 in_exp = true;
                 b = new Int(parse(expr, i+2)->evaluate());
             }
+            // TODO: fix order of ops
             if(expr.at(i) == "+")      { return new Add(a, b); }
             else if(expr.at(i) == "-") { return new Sub(a, b); }
             else if(expr.at(i) == "*") { return new Mult(a, b); }
@@ -78,9 +79,8 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             } else {
                 in_exp = false;
             }
-            Print p(parse(expr, i+1));
-            p.evaluate();
-            return nullptr;
+            Print *p = new Print(parse(expr, i+1));
+            return p;
         } else if(expr.at(i) == "let") {
             if(expr.size() == 4) {
                 in_exp = true;
@@ -88,10 +88,9 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
                 in_exp = false;
             }
             if(expr.at(i+2) == "=") {
-                Let l(expr.at(i+1), parse(expr, i+3));
-                l.evaluate();
+                Let *l = new Let(expr.at(i+1), parse(expr, i+3));
+                return l;
             }
-            return nullptr;
         } else if(in_exp) {
             in_exp = false;
             if(variables.find(expr.at(i)) != variables.end()) {
@@ -101,6 +100,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             }
         } else {
             for(std::string op : operations) {
+                in_exp = true;
                 int loc = 0;
                 if((loc = expr.at(i).find(op)) != std::string::npos) {
                     std::vector<std::string> split = strtok_v_k(expr.at(i), op);
@@ -113,13 +113,15 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
     return nullptr;
 }
 
-void Parser::start() {
+void Parser::start(bool compile) {
     std::vector<std::string> expr;
+    AST ast;
     for(std::string &line : file) {
         std::transform(line.begin(), line.end(), line.begin(), tolower);
         expr = strtok_v(line, " ");
         in_exp = false; // reset every line
-        this->parse(expr);
+        ast.add_node(this->parse(expr));
         expr.clear();
     }
+    (compile) ? ast.compile() : ast.interpret();
 }

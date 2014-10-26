@@ -26,12 +26,21 @@ public:
         LOperand = a;
         ROperand = b;
     }
+    void compile() {
+        
+    }
+    void clean() {
+        LOperand->clean();
+        ROperand->clean();
+        delete LOperand;
+        delete ROperand;
+    }
 protected:
-    Expression *LOperand, 
+    Expression *LOperand,
                *ROperand;
 };
 
-// This saves so much code (~50% of the LOC of the file)
+// This saves so much code
 // I'm so sorry
 #define OPERATION(name, op)                                                   \
     class name : public Operation {                                           \
@@ -47,7 +56,7 @@ protected:
  */
 OPERATION(Add,      +)
 OPERATION(Sub,      -)
-OPERATION(Div,      /) 
+OPERATION(Div,      /)
 OPERATION(Mult,     *)
 OPERATION(Mod,      %)
 OPERATION(Bit_AND,  &)

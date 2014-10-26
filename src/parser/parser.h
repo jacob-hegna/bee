@@ -22,10 +22,36 @@ public:
     ~Parser();
 
     static Expression* parse(std::vector<std::string> expr, int i = 0);
-    void start();
+    void start(bool compile);
 
 private:
     std::vector<std::string> file;
+};
+
+class AST {
+public:
+    AST() {}
+    ~AST() {
+        for(Expression* expr : root) {
+            expr->clean();
+        }
+    }
+
+    void add_node(Expression *expr) {
+        root.push_back(expr);
+    }
+    void compile() {
+        for(Expression* expr : root) {
+            expr->compile();
+        }
+    }
+    void interpret() {
+        for(Expression* expr : root) {
+            expr->compile();
+        }
+    }
+private:
+    std::vector<Expression*> root;
 };
 
 #endif

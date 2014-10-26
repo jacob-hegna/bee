@@ -3,4 +3,4 @@
 .LSOverride
 
 test
-basic++
+./bin/bee

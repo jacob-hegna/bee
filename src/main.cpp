@@ -2,24 +2,35 @@
 #include <cstring>
 #include <string>
 #include <array>
+#include <unistd.h>
 
-#include "shell/shell.h"
 #include "parser/parser.h"
 #include "globals.h"
 
+extern int opterr;
+extern char* optarg;
+
 int main(int argc, char *argv[]) {
-    std::string usage = "Usage: basic++ [-h | --help] [filename]";
+    std::string usage = "Usage: %s -oi <filename> | -h\n";
     if(argc < 2) {
-        Shell shell;
-        shell.start();
+        printf(usage.c_str(), argv[0]);
     } else {
-        if(argv[1] == "-h" || argv[1] == "--help") {
-            std::cout << usage << std::endl;
-        } else {
-            Parser parser(argv[1]);
-            parser.start();
+        opterr = 0;
+        int c;
+        while((c = getopt(argc, argv, "o:d:e:h")) != -1) {
+            if(c == 'o' || c == 'i') {
+                std::string optarg_std(optarg);
+                Parser parser(optarg_std);
+                parser.start(c == 'o');
+            } else if(c == 'h') {
+                printf(usage.c_str(), argv[0]);
+                printf(" -o   compile basic\n");
+                printf(" -i   interpret basic\n");
+                printf(" -h   print this message\n");
+            }
         }
     }
+    return 0;
 }
 
 // globals.h definitions
