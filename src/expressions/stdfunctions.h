@@ -56,7 +56,7 @@ public:
         return 0;
     }
     void compile() {
-        
+
     }
     void clean() {
         value->clean();

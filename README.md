@@ -1,28 +1,51 @@
-[![Build Status](https://travis-ci.org/jacob-hegna/basicpp.svg?branch=master)](https://travis-ci.org/jacob-hegna/basicpp)
-# basic++
-basic++ is an open source, BASIC interpreter.  Currently it does not follow any specific dialect (not enough commands are supported), but the GRAMMAR.md file will define all the possible commands.
+[![Build Status](https://travis-ci.org/jacob-hegna/basicpp.svg?branch=master)](https://travis-ci.org/jacob-hegna/bee)
+# bee `basicly eighty eighty`
+bee is an open source, BASIC interpreter/8080 compiler.  It started out as simply another implementation of the BASIC language, but with the dawn of my [`open8080`](https://github.com/jacob-hegna/open8080) project, it now has the expressed goal of compiling BASIC to 8080 bytecode.
+## Usage
+To interpret BASIC
 
-## Copyright and License
-basic++ is Copyright 2013 Jacob Hegna.
+```
+bee -i main.bs
+```
 
-This file is a part of basic++.
+To compile to 8080 assembly
 
-basic++ is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+```
+bee -o main.bs
+```
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+To assemble the 8080 code
 
-You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
+```
+open8080 -a a.out
+```
 
 ## Building
 Clone the repo:
 
 ```
-git clone https://github.com/jacob-hegna/basicpp
+git clone https://github.com/jacob-hegna/bee
 ```
 
 Move to the folder and build
 
 ```
-cd basicpp
+cd bee
 make
+make install
 ```
+
+It will install to `/usr/local/bin/bee`.
+
+To remove `bee`, simply run `make remove`.
+
+## Copyright and License
+bee is Copyright 2013 Jacob Hegna.
+
+This file is a part of bee.
+
+bee is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this program.  If not, see <http://www.gnu.org/licenses/>.
