@@ -2,8 +2,6 @@
 
 [![Build Status](https://travis-ci.org/jacob-hegna/bee.svg?branch=master)](https://travis-ci.org/jacob-hegna/bee)
 
-![asdf](http://7colorz.com/wp-content/uploads/2013/05/Dancing-Bee.gif)
-
 bee is an open source, BASIC interpreter/8080 compiler.  It started out as simply another implementation of the BASIC language, but with the dawn of my [`open8080`](https://github.com/jacob-hegna/open8080) project, it now has the expressed goal of compiling BASIC to 8080 bytecode.
 ## Usage
 To interpret BASIC
