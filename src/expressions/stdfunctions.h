@@ -8,19 +8,21 @@
 #include "expressions.h"
 #include "../globals.h"
 
-class STD_Function : public Expression {
+template<class T>
+class STD_Function : public Expression<T> {
     virtual void clean() = 0;
     virtual void compile() = 0;
 };
 
-class Let : public STD_Function {
+template<class T>
+class Let : public STD_Function<T> {
 public:
-    Let(std::string name, Expression *value ) {
+    Let(std::string name, Expression<T> *value ) {
         this->name = name;
         this->value = value->evaluate();
         variables[name] = this->value;
     }
-    int evaluate() {
+    T evaluate() {
         return 0;
     }
     void compile() {
@@ -29,10 +31,10 @@ public:
     void clean() {}
 private:
     std::string name;
-    int value;
+    T value;
 };
 
-class Get : public STD_Function {
+class Get : public STD_Function<int> {
 public:
     Get(std::string name) {
         this->name = name;
@@ -48,9 +50,10 @@ private:
     std::string name;
 };
 
-class Print : public STD_Function {
+template<class T>
+class Print : public STD_Function<T> {
 public:
-    Print(Expression *a) {value=a;}
+    Print(Expression<T> *a) {value=a;}
     int evaluate() {
         std::cout << value->evaluate() << std::endl;
         return 0;
@@ -63,7 +66,7 @@ public:
         delete value;
     }
 private:
-    Expression *value;
+    Expression<T> *value;
 };
 
 #endif

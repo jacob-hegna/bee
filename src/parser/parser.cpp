@@ -47,20 +47,21 @@ Parser::~Parser() {
 
 }
 
-Expression* Parser::parse(std::vector<std::string> expr, int i) {
+template<class T>
+Expression<T>* Parser::parse(std::vector<std::string> expr, int i) {
     if(i <= expr.size()) {
         if(std::find(operations.begin(), operations.end(), expr.at(i)) != operations.end()) {
-            Expression *a, *b;
+            Expression<T> *a, *b;
             if(i == expr.size() - 2) {
                 in_exp = true;
-                a = new Int(parse(expr, i-1)->evaluate());
+                a = new Int(parse<int>(expr, i-1)->evaluate());
                 in_exp = true;
-                b = new Int(parse(expr, i+1)->evaluate());
+                b = new Int(parse<int>(expr, i+1)->evaluate());
             } else {
                 in_exp = true;
-                a = new Int(parse(expr, i-1)->evaluate());
+                a = new Int(parse<int>(expr, i-1)->evaluate());
                 in_exp = true;
-                b = new Int(parse(expr, i+2)->evaluate());
+                b = new Int(parse<int>(expr, i+2)->evaluate());
             }
             // TODO: fix order of ops
             if(expr.at(i) == "+")      { return new Add(a, b); }
@@ -79,7 +80,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
             } else {
                 in_exp = false;
             }
-            Print *p = new Print(parse(expr, i+1));
+            Print<int> *p = new Print<int>(parse<int>(expr, i+1));
             return p;
         } else if(expr.at(i) == "let") {
             if(expr.size() == 4) {
@@ -88,7 +89,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
                 in_exp = false;
             }
             if(expr.at(i+2) == "=") {
-                Let *l = new Let(expr.at(i+1), parse(expr, i+3));
+                Let<int> *l = new Let<int>(expr.at(i+1), parse<int>(expr, i+3));
                 return l;
             }
         } else if(in_exp) {
@@ -97,6 +98,7 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
                 return new Get(expr.at(i));
             } else if(Int::is_int(expr.at(i))) {
                 return new Int(expr.at(i));
+            } else if(Float::is_float(expr.at(i))) {
             }
         } else {
             for(std::string op : operations) {
@@ -104,23 +106,23 @@ Expression* Parser::parse(std::vector<std::string> expr, int i) {
                 int loc = 0;
                 if((loc = expr.at(i).find(op)) != std::string::npos) {
                     std::vector<std::string> split = strtok_v_k(expr.at(i), op);
-                    return parse(split, 0);
+                    return parse<int>(split, 0);
                 }
             }
         }
-        return parse(expr, i+1);
+        return parse<int>(expr, i+1);
     }
     return nullptr;
 }
 
 void Parser::start(bool compile) {
     std::vector<std::string> expr;
-    AST ast;
+    AST<int> ast;
     for(std::string &line : file) {
         std::transform(line.begin(), line.end(), line.begin(), tolower);
         expr = strtok_v(line, " ");
         in_exp = false; // reset every line
-        ast.add_node(this->parse(expr));
+        ast.add_node(this->parse<int>(expr));
         expr.clear();
     }
     (compile) ? ast.compile() : ast.interpret();

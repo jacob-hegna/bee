@@ -21,37 +21,40 @@ public:
     Parser(std::string);
     ~Parser();
 
-    static Expression* parse(std::vector<std::string> expr, int i = 0);
+    template<class T>
+    static Expression<T>* parse(std::vector<std::string> expr, int i = 0);
+
     void start(bool compile);
 
 private:
     std::vector<std::string> file;
 };
 
+template<class T>
 class AST {
 public:
     AST() {}
     ~AST() {
-        for(Expression* expr : root) {
+        for(Expression<T>* expr : root) {
             expr->clean();
         }
     }
 
-    void add_node(Expression *expr) {
+    void add_node(Expression<T> *expr) {
         root.push_back(expr);
     }
     void compile() {
-        for(Expression* expr : root) {
+        for(Expression<T>* expr : root) {
             expr->compile();
         }
     }
     void interpret() {
-        for(Expression* expr : root) {
-            expr->compile();
+        for(Expression<T>* expr : root) {
+            expr->evaluate();
         }
     }
 private:
-    std::vector<Expression*> root;
+    std::vector<Expression<T>*> root;
 };
 
 #endif

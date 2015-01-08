@@ -19,15 +19,15 @@ const std::array<std::string, 10> operations = {
     ">>"
 };
 
-class Operation : public Expression {
+class Operation : public Expression<int> {
 public:
     Operation() {}
-    Operation(Expression *a, Expression *b) {
+    Operation(Expression<int> *a, Expression<int> *b) {
         LOperand = a;
         ROperand = b;
     }
     void compile() {
-        
+
     }
     void clean() {
         LOperand->clean();
@@ -36,24 +36,19 @@ public:
         delete ROperand;
     }
 protected:
-    Expression *LOperand,
-               *ROperand;
+    Expression<int> *LOperand,
+                  *ROperand;
 };
 
 // This saves so much code
 // I'm so sorry
 #define OPERATION(name, op)                                                   \
-    class name : public Operation {                                           \
+    class name : public Operation {                                        \
     public:                                                                   \
-        name (Expression *a, Expression *b) : Operation(a, b) {}              \
-        int evaluate() {return LOperand->evaluate() op ROperand->evaluate();} \
+        name (Expression<int> *a, Expression<int> *b) : Operation(a, b) {}     \
+        int evaluate() {return LOperand->evaluate() op ROperand->evaluate();}   \
     };
 
-/* I'm not sure how I thought this was a good idea
- * Email me at jacobhegna@gmail.com when this is on
- * either stackoverflow or r/shittyprogramming
- * Ninja edit: confirmed was sober
- */
 OPERATION(Add,      +)
 OPERATION(Sub,      -)
 OPERATION(Div,      /)

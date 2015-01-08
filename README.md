@@ -2,11 +2,10 @@
 
 [![Build Status](https://travis-ci.org/jacob-hegna/bee.svg?branch=master)](https://travis-ci.org/jacob-hegna/bee)
 
-![asdf](http://7colorz.com/wp-content/uploads/2013/05/Dancing-Bee.gif)
+bee is an open source language for the Intel 8080 platform.  It started out as simply another implementation of the BASIC language, but with the dawn of my [`open8080`](https://github.com/jacob-hegna/open8080) project, it has shifted bases from BASIC to an abstraction of 8080 bytecode to a higher level language.  Currently, it just interprets the code, but hopefully it eventually will be able to compile it to a form runnable by `open8080`.
 
-bee is an open source, BASIC interpreter/8080 compiler.  It started out as simply another implementation of the BASIC language, but with the dawn of my [`open8080`](https://github.com/jacob-hegna/open8080) project, it now has the expressed goal of compiling BASIC to 8080 bytecode.
 ## Usage
-To interpret BASIC
+To interpret `bee` code
 
 ```
 bee -i main.bs

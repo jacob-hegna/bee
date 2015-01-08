@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
     } else {
         opterr = 0;
         int c;
-        while((c = getopt(argc, argv, "o:d:e:h")) != -1) {
+        while((c = getopt(argc, argv, "o:i:h")) != -1) {
             if(c == 'o' || c == 'i') {
                 std::string optarg_std(optarg);
                 Parser parser(optarg_std);
